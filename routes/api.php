@@ -7,9 +7,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/test', function(){
-    return response()->json('hello');
-});
+// Route::get('/test', function(){
+//     return response()->json('hello');
+// });
 
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index']);
 Route::post('/posts', [App\Http\Controllers\PostController::class, 'store']);

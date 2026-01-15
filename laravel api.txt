@@ -1,0 +1,51 @@
+php artisan install:api
+
+sanctum=token based authentication hain validation k laye use hota hai.keh authenticated user hai ya nahi hain.
+------------------------------------------
+in web/api.php file
+Route::get('/posts', [App\Http\Controllers\PostController::class, 'index']);
+Route::post('/posts', [App\Http\Controllers\PostController::class, 'store']);
+Route::get('/posts/{post}', [App\Http\Controllers\PostController::class, 'show']);
+Route::put('/posts/{post}', [App\Http\Controllers\PostController::class, 'update']);
+Route::delete('/posts/{post}', [App\Http\Controllers\PostController::class, 'destroy']);
+------------------------------------------
+goto web browser in url tab there is 
+http://127.0.0.1:8000/api/posts
+-----------------------------------------
+now i make model
+php artisan make:model Post -mc --api
+
+in post migration model
+$table->string('name');
+$table->string('title');
+$table->stirng('content');
+------------------------------
+php artisan migrate
+------------------------------
+postcontroller
+public function index(){
+$post=Post::get();
+return response()->json([
+'message'=>'List of Posts',
+'posts'=>'$posts'
+],200);
+}
+---------------------------------
+public function store(){
+$post=new Post;
+$post->name=request->name;
+$post->title=request->title;
+$post->content=request->content;
+$post->save();
+
+return response()->json([
+'message'=>'New Post Created',
+'post'=>'$post'
+],200);
+}
+--------------------------------
+
+--------------------------------------------
+now goto postman for testing api
+get method and url like http://127.0.0.1:8000/api/posts 
+ ---------------------------------------------------------
